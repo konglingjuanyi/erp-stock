@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="BaseSerialNumberDAO">
+	<resultMap id="result" type="com.jiji.erp.stock.model.SerialNumberDO">
+		<id property="id" column="id" />
+		<result property="appType" column="app_type" />
+		<result property="serialDate" column="serial_date" />
+		<result property="number" column="number" />
+	</resultMap>
+	
+	<sql id="insert_columns">
+            <if test="appType != null">app_type</if>
+            <if test="serialDate != null">,serial_date</if>
+            <if test="number != null">,number</if>
+	</sql>
+	
+	<sql id="insert_all_columns">
+			app_type
+            ,serial_date
+            ,number
+	</sql>
+
+	<sql id="insert_values">
+          <if test="appType != null">#{appType}</if>
+          <if test="serialDate != null">,#{serialDate}</if>
+          <if test="number != null">,#{number}</if>
+	</sql>
+
+    <sql id="batch_insert_values">
+            #{item.appType}
+            ,#{item.serialDate}
+            ,#{item.number}
+    </sql>
+	
+	<insert id="insertHasId" parameterType="com.jiji.erp.stock.model.SerialNumberDO" useGeneratedKeys="false">
+		insert into tb_serial_number(
+			id,
+			<include refid="insert_columns" />
+		)values(
+			#{id},
+			<include refid="insert_values" />
+		)
+	</insert>
+	
+	<insert id="batchInsertHasId"  parameterType="java.util.List" useGeneratedKeys="false">
+		insert into tb_serial_number(
+			id,
+			<include refid="insert_all_columns" />
+		)values
+		<foreach collection="list" item="item" index="index" separator=",">
+		(
+		    #{item.id},
+            <include refid="batch_insert_values" />
+		)
+		</foreach>
+	</insert>
+
+	<insert id="insert" parameterType="com.jiji.erp.stock.model.SerialNumberDO"  useGeneratedKeys="true" keyProperty="id">
+		insert into tb_serial_number(
+			<include refid="insert_columns" />
+		)values(
+			<include refid="insert_values" />
+		)
+	</insert>
+
+	<insert id="batchInsert" parameterType="java.util.List" useGeneratedKeys="true">
+		insert into tb_serial_number(
+			<include refid="insert_all_columns" />
+		)values
+		<foreach collection="list" item="item" index="index" separator=",">
+		(
+            <include refid="batch_insert_values" />
+		)
+		</foreach>
+	</insert>
+
+	<update id="update" parameterType="com.jiji.erp.stock.model.SerialNumberDO">
+        update tb_serial_number
+        <set>
+            <if test="appType != null"> app_type=#{appType}, </if>
+            <if test="serialDate != null"> serial_date=#{serialDate}, </if>
+            <if test="number != null"> number=#{number}, </if>
+        </set>
+		where id=#{id}
+	</update>
+
+	<update id="updateByField" parameterType="java.util.HashMap">
+        update tb_serial_number
+        <set>
+            <if test="template.appType != null"> app_type=#{template.appType}, </if>
+            <if test="template.serialDate != null"> serial_date=#{template.serialDate}, </if>
+            <if test="template.number != null"> number=#{template.number}, </if>
+        </set>
+		<where>
+            <if test="condition.id != null"> and id=#{condition.id}</if>
+            <if test="condition.appType != null"> and app_type=#{condition.appType}</if>
+            <if test="condition.serialDate != null"> and serial_date=#{condition.serialDate}</if>
+            <if test="condition.number != null"> and number=#{condition.number}</if>
+        </where>
+	</update>
+
+	<select id="select" parameterType="java.util.Map" resultMap="result">
+		<include refid="select_all_column" />
+		from tb_serial_number 
+		where id=#{id}
+		<if test="isLock"> for update </if>
+	</select>
+
+	<select id="selectListByIdList" parameterType="java.util.Map" resultMap="result">
+		<include refid="select_all_column" />
+		from tb_serial_number
+		<where>
+			<if test="idList != null">
+			id in
+			<foreach item="item" index="index" collection="idList" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+			</if>
+		</where>
+		<if test="isLock"> for update </if>
+	</select>
+
+	<select id="selectEOByEO" parameterType="java.util.Map" resultMap="result">
+		<include refid="select_all_column" />
+		from tb_serial_number
+		<include refid="where_all" />
+	</select>
+	
+	<sql id="select_all_column">
+		select ID
+            ,app_type
+            ,serial_date
+            ,number
+	</sql>
+
+	<sql id="where_all">
+		<where>
+            <include refid="condition_all" />
+		</where>
+	</sql>
+
+    <sql id="condition_all">
+        <if test="condition.id != null"> and id=#{condition.id} </if>
+        <if test="condition.appType != null and condition.appType != ''"> and app_type=#{condition.appType} </if>
+        <if test="condition.serialDate != null"> and serial_date=#{condition.serialDate} </if>
+        <if test="condition.number != null"> and number=#{condition.number} </if>
+    </sql>
+
+	<delete id="delete" parameterType="com.jiji.erp.stock.model.SerialNumberDO">
+		delete from tb_serial_number
+		where id=#{id}
+	</delete>
+
+</mapper>

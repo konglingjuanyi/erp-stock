@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  
+http://www.springframework.org/schema/beans/spring-beans.xsd
+http://code.alibabatech.com/schema/dubbo
+http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+	<!-- 提供方应用信息，用于计算依赖关系 -->
+	<dubbo:application name="jiji-home-provider" />
+	<!-- 使用zookeeper注册中心暴露服务地址 -即zookeeper的所在服务器ip地址和端口号 -->
+	<dubbo:registry protocol="zookeeper" address="${dubbo.zk.address}" />
+
+	<!-- 用dubbo协议在20880端口暴露服务 -->
+	<dubbo:protocol name="dubbo" port="${dubbo.protocol.port}" />
+	<!-- 声明需要暴露的服务接口 -->
+	<dubbo:service interface="com.jiji.home.api.NewsService" ref="newsServiceImpl" version="0.0.1-SNAPSHOT"></dubbo:service>
+	<bean id="newsService" class="com.jiji.home.service.NewsServiceImpl"></bean>
+
+	<dubbo:service interface="com.jiji.home.api.VideoService" ref="videoServiceImpl" version="0.0.1-SNAPSHOT"></dubbo:service>
+	<bean id="videoService" class="com.jiji.home.service.VideoServiceImpl"></bean>
+
+	<dubbo:service interface="com.jiji.home.api.GeekService" ref="geekServiceImpl" version="0.0.1-SNAPSHOT"></dubbo:service>
+	<bean id="geekService" class="com.jiji.home.service.GeekServiceImpl"></bean>
+
+	<dubbo:service interface="com.jiji.home.api.JipinService" ref="jipinServiceImpl" version="0.0.1-SNAPSHOT"></dubbo:service>
+	<bean id="jipinService" class="com.jiji.home.service.JipinServiceImpl"></bean>
+
+	<dubbo:service interface="com.jiji.home.api.PictureService" ref="pictureServiceImpl" version="0.0.1-SNAPSHOT"></dubbo:service>
+	<bean id="pictureService" class="com.jiji.home.service.PictureServiceImpl"></bean>
+	
+	<dubbo:service interface="com.jiji.home.api.NewsContentService" ref="newsContentServiceImpl" version="0.0.1-SNAPSHOT"></dubbo:service>
+	<bean id="newsContentService" class="com.jiji.home.service.NewsContentServiceImpl"></bean>
+</beans>

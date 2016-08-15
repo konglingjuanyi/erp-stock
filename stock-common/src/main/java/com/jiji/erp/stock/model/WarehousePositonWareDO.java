@@ -1,0 +1,19 @@
+package com.jiji.erp.stock.model;
+
+/**
+ * 仓库位置商品实体对象
+ * @author		bin.yu
+ * @create		2016-08-10 15:48:59
+ */
+public class WarehousePositonWareDO extends BaseWarehousePositonWareDO {
+
+
+	//////////////////////////////////// 【构造函数集】///////////////////////////////////////////////////
+	/**
+	 * 默认构造方法
+	 */
+	public WarehousePositonWareDO(){}
+	
+	
+	/////////////////////////////////////////////////////////////////////////////////////////////////////
+}
