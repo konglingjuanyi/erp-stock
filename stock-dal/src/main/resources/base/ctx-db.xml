@@ -39,7 +39,7 @@
 			<value>${jdbc.maxPoolSize}</value>
 		</property>
 		<property name="minPoolSize">
-			<value>${jdbc.minPoolSize}</value>
+			<value>30</value>
 		</property>
 		<property name="idleConnectionTestPeriod">
 			<value>${jdbc.idleConnectionTestPeriod}</value>
