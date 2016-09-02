@@ -10,12 +10,7 @@
         </plugin>
     </plugins>
     <mappers>
-             <mapper resource="mybatis/BaseWarehouse.xml"/>
-             <mapper resource="mybatis/Warehouse.xml"/>
-             <mapper resource="mybatis/BaseWarehousePosition.xml"/>
-             <mapper resource="mybatis/WarehousePosition.xml"/>
-             <mapper resource="mybatis/BaseWarehousePositonWare.xml"/>
-             <mapper resource="mybatis/WarehousePositonWare.xml"/>
+            
              <mapper resource="mybatis/BaseSerialNumber.xml"/>
              <mapper resource="mybatis/SerialNumber.xml"/>
     </mappers>
